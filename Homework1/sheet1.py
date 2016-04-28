@@ -29,6 +29,7 @@ class PCA():
       U = U.T*-1              #eigen vectors are row-wise now
       D = D / (self.n - 1)
       return U, D
+'''
 X = np.array([[ -2.133268233289599,   0.903819474847349,   2.217823388231679, -0.444779660856219,
                -0.661480010318842,  -0.163814281248453,  -0.608167714051449,  0.949391996219125],
              [ -1.273486742804804,  -1.270450725314960,  -2.873297536940942,   1.819616794091556,
@@ -61,12 +62,12 @@ pca = PCA(X)
 #print(pca.D)
 #print(pca.project(X,m))
 print(pca.denoise(X, m))
+'''
 
 #Assignment 2
 def distance(a, b):
    return np.sqrt(np.sum((b-a)**2))
 
-#Assignment 3
 def gammaidx(X, k):
    distances = np.zeros((len(X),len(X)))
    for i in range(0, len(X)-1):
@@ -101,7 +102,7 @@ print(gammaidx(X, k))
 '''
 
 
-#Assignment 4
+#Assignment 3
 def auc(y_true, y_val, plot=False):
    y_true_2 = (y_true+1)/2
    y_val_2 = y_val > .5
@@ -117,6 +118,8 @@ def auc(y_true, y_val, plot=False):
    return 0
 
 auc(np.array([1,1,1,-1,-1,-1]), np.array([1,-1,1,-1,1,-1]), False)
+
+#Assignment 4
 
 #--- Part 2: Application ---
 #Assignment 5
