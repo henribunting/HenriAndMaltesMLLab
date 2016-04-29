@@ -1,4 +1,7 @@
 import numpy as np
+import scipy.io
+import matplotlib.pyplot as plt
+
 
 #--- Part 1: Implementation ---
 #Assignment 1
@@ -25,11 +28,11 @@ class PCA():
       return S
    def solveeigensystem(self, X):
       #TODO: use eigh / eigvalsh ?
-      D, U = np.linalg.eig(X)
-      U = U.T*-1              #eigen vectors are row-wise now
-      D = D / (self.n - 1)
+      D, U = np.linalg.eigh(X)
+      U = U.T[::-1]*-1              #eigen vectors are row-wise now
+      D = D[::-1] / (self.n - 1)
       return U, D
-'''
+
 X = np.array([[ -2.133268233289599,   0.903819474847349,   2.217823388231679, -0.444779660856219,
                -0.661480010318842,  -0.163814281248453,  -0.608167714051449,  0.949391996219125],
              [ -1.273486742804804,  -1.270450725314960,  -2.873297536940942,   1.819616794091556,
@@ -56,13 +59,18 @@ correct_X_denoised = np.array([[-1.88406616, -1.35842791, -1.38087939],
                                 [ 0.17114282,  1.59202918, -0.79375686],
                                 [-0.47605492,  0.15195227, -0.88121723],
                                 [ 0.43110399,  0.67815178, -0.47407698]])
-pca = PCA(X)
+#pca = PCA(X)
 #print(pca.scatter(X))
 #print(pca.U)
 #print(pca.D)
 #print(pca.project(X,m))
-print(pca.denoise(X, m))
-'''
+#print(pca.denoise(X, m))
+
+#plt.bar(pca.D, range(len(pca.D)))
+#plt.savefig("1.0.png")
+#plt.close()
+
+
 
 #Assignment 2
 def distance(a, b):
@@ -104,25 +112,93 @@ print(gammaidx(X, k))
 
 #Assignment 3
 def auc(y_true, y_val, plot=False):
-   y_true_2 = (y_true+1)/2
-   y_val_2 = y_val > .5
-   numbertrue = np.sum(y_true_2)
-   numberfalse = len(y_true) - numbertrue
+   y_true_labeled = (y_true+1)/2
+   truetotal = np.sum(y_true_labeled)
+   falsetotal = len(y_true_labeled) - truetotal
    
-   tp = np.sum((y_val_2+y_true_2)==2)
-   fp = np.sum((y_val_2*1.5) + y_true_2 == 1.5)
+   for i in [.3, .4, .5, .6, .7]:
+      y_val_labeled = y_val > i
    
-   tpr = tp / numbertrue
-   fpr = fp / numberfalse
-   print(fpr)
+      tp = np.sum((y_true_labeled+y_val_labeled)==2)
+      fp = np.sum((y_true_labeled*1.5) + y_val_labeled == 1.5)
+   
+      tpr = tp / truetotal
+      fpr = fp / falsetotal
+      print("bias: "+str(i)+" tpr: "+str(tpr)+" fpr: "+str(fpr))
    return 0
 
-auc(np.array([1,1,1,-1,-1,-1]), np.array([1,-1,1,-1,1,-1]), False)
+auc(np.array([-1, -1, -1, +1, +1]), np.array([0.3, 0.4, 0.5, 0.6, 0.7]), False)
 
 #Assignment 4
 
 #--- Part 2: Application ---
+'''
 #Assignment 5
+usps = scipy.io.loadmat('usps.mat')
+print(usps['data_patterns'].shape)
+
+def assignment5_analyze_pcas(X, noisecoefficient):
+   #print(X.shape[1])
+   
+   print("--- "+str(noisecoefficient)+" ---")
+   pca = PCA( X + noisecoefficient*np.random.randn(X.shape[0], X.shape[1]) )
+   print(pca.D[250:260])
+
+   plt.bar(range(len(pca.D)), pca.D)
+   plt.savefig("5.b.a_"+str(noisecoefficient)+".png")
+   plt.close()
+
+   plt.bar(range(25), pca.D[:25])
+   plt.savefig("5.b.b_"+str(noisecoefficient)+".png")
+   plt.close()
+   
+   plt.imshow(pca.U[:5].reshape(5*16,16), cmap='gray')
+   plt.savefig("5.b.c_"+str(noisecoefficient)+".png")
+   plt.close()
+   #plt.bar(pca.D[:5], range(5))
+   #plt.savefig("5.b.c_"+str(noisecoefficient)+".png")
+   #plt.close()
+
+   for i in range(10):
+      Xprime = pca.denoise(X, 5*i)
+      plt.imshow(Xprime[:10].reshape(10*16,16), cmap='gray')
+      plt.savefig("5.c.Xprime_"+str(noisecoefficient)+"_"+str(5*i)+".png")
+   plt.imshow(X[:10].reshape(10*16,16), cmap='gray')
+   plt.savefig("5.c.X_"+str(noisecoefficient)+".png")
+   plt.close()
+
+   
+assignment5_analyze_pcas(usps['data_patterns'].T, 0)
+assignment5_analyze_pcas(usps['data_patterns'].T, .5)
+assignment5_analyze_pcas(usps['data_patterns'].T, 3)
+
+X = usps['data_patterns'].T
+noisecoefficient = 7
+X[2] += noisecoefficient*np.random.randn(X.shape[1])
+X[4] += noisecoefficient*np.random.randn(X.shape[1])
+X[6] += noisecoefficient*np.random.randn(X.shape[1])
+X[8] += noisecoefficient*np.random.randn(X.shape[1])
+X[10] += noisecoefficient*np.random.randn(X.shape[1])
+
+pca = PCA( X )
+
+plt.bar(range(len(pca.D)), pca.D)
+plt.savefig("5.b.a_23479.png")
+plt.close()
+
+plt.bar(range(25), pca.D[:25])
+plt.savefig("5.b.b_23479.png")
+plt.close()
+
+for i in range(10):
+   Xprime = pca.denoise(X, 5*i)
+   plt.imshow(Xprime[:10].reshape(10*16,16), cmap='gray')
+   plt.savefig("5.d.Xprime."+str(5*i)+".png")
+plt.imshow(X[:10].reshape(10*16,16), cmap='gray')
+plt.savefig("5.d.X.png")
+plt.close()
+'''
+
 #Assignment 6
 #Assignment 7
 #Assignment 8
