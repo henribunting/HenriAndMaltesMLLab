@@ -11,11 +11,11 @@ class PCA():
       self.U, self.D = self.solveeigensystem(self.scatter(X))
    def project(self, X, m):
       Ureduce = self.U[0:m]     #row-wise eigenvectors
-      Z = np.dot(Ureduce, self.center(X).T)
+      Z = np.dot(Ureduce, self.center(X).T).T
       return Z
    def denoise(self, X, m):
       Ureduce = self.U[0:m]     #row-wise eigenvectors
-      Xprime = self.decenter(np.dot(Ureduce.T, self.project(X, m)).T)
+      Xprime = self.decenter(np.dot(Ureduce.T, self.project(X, m).T).T)
       return Xprime
    def center(self, X):
       self.Xbar = (1.0/self.n) * (np.sum(X, axis=0)).T
@@ -32,7 +32,7 @@ class PCA():
       U = U.T[::-1]*-1              #eigen vectors are row-wise now
       D = D[::-1] / (self.n - 1)
       return U, D
-
+'''
 X = np.array([[ -2.133268233289599,   0.903819474847349,   2.217823388231679, -0.444779660856219,
                -0.661480010318842,  -0.163814281248453,  -0.608167714051449,  0.949391996219125],
              [ -1.273486742804804,  -1.270450725314960,  -2.873297536940942,   1.819616794091556,
@@ -60,6 +60,7 @@ correct_X_denoised = np.array([[-1.88406616, -1.35842791, -1.38087939],
                                 [-0.47605492,  0.15195227, -0.88121723],
                                 [ 0.43110399,  0.67815178, -0.47407698]])
 #pca = PCA(X)
+#print(pca.project(X, m=2))
 #print(pca.scatter(X))
 #print(pca.U)
 #print(pca.D)
@@ -69,23 +70,31 @@ correct_X_denoised = np.array([[-1.88406616, -1.35842791, -1.38087939],
 #plt.bar(pca.D, range(len(pca.D)))
 #plt.savefig("1.0.png")
 #plt.close()
-
+'''
 
 
 #Assignment 2
-def distance(a, b):
-   return np.sqrt(np.sum((b-a)**2))
+def dist_matrix(A):
+   n = A.shape[0]
+   D = np.empty((n,n))
+   for i in range(n):
+       D[i] = np.sqrt(np.square(A-A[i]).sum(1))
+   return D
+
+def k_nearest(X, k_nn):
+   D = dist_matrix(X)
+   nearest_neighbors = np.empty((X.shape[0], k_nn), dtype=int)
+   for i in range(X.shape[0]):
+      nearest_neighbors[i]=np.argsort(D[i])[1:k_nn+1]
+   return nearest_neighbors
 
 def gammaidx(X, k):
-   distances = np.zeros((len(X),len(X)))
-   for i in range(0, len(X)-1):
-      for j in range(i+1, len(X)):
-         distances[i][j] = distance(X[i],X[j])
-   distances = distances + distances.T
+   distances = dist_matrix(X)
+   nearestindicies = k_nearest(X, k)
    
    nearestdistances = np.zeros((len(X),k))
    for i in range(len(X)):
-      nearestdistances[i] = distances[i][ np.argsort(distances[i])[1:k+1] ]
+      nearestdistances[i] = distances[i][ nearestindicies[i] ]
    
    return (1.0/k) * np.sum(nearestdistances, axis=1)
 
@@ -112,24 +121,97 @@ print(gammaidx(X, k))
 
 #Assignment 3
 def auc(y_true, y_val, plot=False):
-   y_true_labeled = (y_true+1)/2
-   truetotal = np.sum(y_true_labeled)
+   y_true_labeled = y_true > 0
+   truetotal = np.sum(y_true_labeled, dtype=float)
    falsetotal = len(y_true_labeled) - truetotal
    
-   for i in [.3, .4, .5, .6, .7]:
-      y_val_labeled = y_val > i
+   y_val_sorted = np.sort(y_val)
+   stepsize = min(y_val_sorted[1:] - y_val_sorted[:-1])
    
-      tp = np.sum((y_true_labeled+y_val_labeled)==2)
-      fp = np.sum((y_true_labeled*1.5) + y_val_labeled == 1.5)
+   tprs = []
+   fprs = []
+   for i in np.arange(min(y_val), max(y_val), stepsize):
+      y_val_labeled = y_val >= i
+   
+      tp = np.sum(y_true_labeled & y_val_labeled)
+      fp = np.sum((y_true_labeled==False) & y_val_labeled)
+      #print("bias: "+str(i)+" tp: "+str(tp)+" fp: "+str(fp))
    
       tpr = tp / truetotal
       fpr = fp / falsetotal
-      print("bias: "+str(i)+" tpr: "+str(tpr)+" fpr: "+str(fpr))
-   return 0
+      
+      tprs.append(tpr)
+      fprs.append(fpr)
+      #print("bias: "+str(i)+" tpr: "+str(tpr)+" fpr: "+str(fpr))
+   plt.plot(fprs, tprs)
+   
+   #print("tprs:"+str(tprs))
+   #print("fprs:"+str(fprs))
+   
+   tprs.append(0)
+   tprs.insert(0,1)
+   fprs.append(0)
+   fprs.insert(0,1)
+   
+   aucvalue = np.trapz(tprs[::-1], fprs[::-1])
+   #print("aucvalue:"+str(aucvalue))
+   return aucvalue
 
-auc(np.array([-1, -1, -1, +1, +1]), np.array([0.3, 0.4, 0.5, 0.6, 0.7]), False)
+#print( auc(np.array([-1, -1, -1, +1, +1]), np.array([0.3, 0.4, 0.5, 0.6, 0.7]), False) )
+#print( auc(np.array([-1, -1, -1, +1, +1, +1]), np.array([0.3, 0.4, 0.6, 0.5, 0.7, 0.8]), plot=True) )
 
 #Assignment 4
+
+def local_C(P, Neighbors):
+   D = P-Neighbors
+   C = np.tensordot(D,D.T,[1,0])
+   return C
+
+def w_matrix(X, k_nn):
+   knn_index = k_nearest(X, k_nn)
+   #print(knn_index.shape)
+   W = np.zeros((X.shape[0],X.shape[0]))
+   #print(k_nn)
+   #print(X.shape)
+   #print(W.shape)
+   for i,P in enumerate(X):
+      C = local_C(P, X[knn_index[i]])
+      unconstrained_W = 1./np.sum(C, axis=0)
+      constrained_W = unconstrained_W/np.sum(unconstrained_W)
+      for kk,j in enumerate(knn_index[i]):
+         #print("i:"+str(i)+" j:"+str(j)+" kk:"+str(kk))
+         W[i][j] = constrained_W[kk]
+   return W
+   
+
+def lle(X, m, tol, n_rule='knn', k=5, epsilon=1.):
+   W = w_matrix(X, k)
+   #print(W.shape)
+   A = np.eye(*W.shape) - W
+   M = (A.T).dot(A)
+   Y = np.linalg.eigh(M)[1][1:m+1].T
+   return Y
+
+
+
+'''
+n = 500
+Xt = 10. * np.random.rand(n, 2);
+X = np.append(Xt, 0.5 * np.random.randn(n, 8), 1);
+
+# Rotate data randomly.
+X = np.dot(X, self.randrot(10).T);
+
+with self.subTest(n_rule='knn', k=30):
+   Xp = imp.lle(X, 2, n_rule='knn', k=30, tol=1e-3)
+   self.plot(Xt, Xp, 'knn')
+with self.subTest(n_rule='eps-ball', epsilon=5.):
+   Xp = imp.lle(X, 2, n_rule='eps-ball', epsilon=5., tol=1e-3)
+   self.plot(Xt, Xp, 'eps-ball')
+with self.subTest(n_rule='eps-ball', epsilon=0.5):
+   with self.assertRaises(ValueError, msg='Graph should not be connected and raise ValueError.'):
+       imp.lle(X, 2, n_rule='eps-ball', epsilon=0.5, tol=1e-3)
+'''
 
 #--- Part 2: Application ---
 '''
