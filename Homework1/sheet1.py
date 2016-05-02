@@ -126,11 +126,13 @@ def auc(y_true, y_val, plot=False):
    falsetotal = len(y_true_labeled) - truetotal
    
    y_val_sorted = np.sort(y_val)
-   stepsize = min(y_val_sorted[1:] - y_val_sorted[:-1])
+   #stepsize = min(y_val_sorted[1:] - y_val_sorted[:-1])
+   #stepsize = .00001
    
    tprs = []
    fprs = []
-   for i in np.arange(min(y_val), max(y_val), stepsize):
+   #for i in np.arange(min(y_val), max(y_val), stepsize):
+   for i in y_val_sorted:
       y_val_labeled = y_val >= i
    
       tp = np.sum(y_true_labeled & y_val_labeled)
@@ -143,11 +145,10 @@ def auc(y_true, y_val, plot=False):
       tprs.append(tpr)
       fprs.append(fpr)
       #print("bias: "+str(i)+" tpr: "+str(tpr)+" fpr: "+str(fpr))
-   plt.plot(fprs, tprs)
    
    #print("tprs:"+str(tprs))
    #print("fprs:"+str(fprs))
-   
+
    tprs.append(0)
    tprs.insert(0,1)
    fprs.append(0)
@@ -155,6 +156,10 @@ def auc(y_true, y_val, plot=False):
    
    aucvalue = np.trapz(tprs[::-1], fprs[::-1])
    #print("aucvalue:"+str(aucvalue))
+
+   if plot:
+      plt.plot(fprs, tprs)
+   
    return aucvalue
 
 #print( auc(np.array([-1, -1, -1, +1, +1]), np.array([0.3, 0.4, 0.5, 0.6, 0.7]), False) )
@@ -282,5 +287,78 @@ plt.close()
 '''
 
 #Assignment 6
+data = np.load("banana.npz")
+'''
+print(data['data'].shape)
+print(data['label'].shape)
+print((data['label'][0,10:20]))
+
+labels2d = np.zeros((2, len(data['label'][0])))
+for i in range(len(data['label'][0])):
+   labels2d[0][i] = data['label'][0][i]
+   labels2d[1][i] = data['label'][0][i]
+
+print(labels2d[:,10:20])
+print(data['data'][labels2d==1].shape)
+#bananainliers = data[data['label']==1]
+#bananaoutliers = np.load("banana.npz")['label']
+'''
+inliersx = data['data'][0][data['label'][0]==1]
+inliersy = data['data'][1][data['label'][0]==1]
+outliersx = data['data'][0][data['label'][0]==-1]
+outliersy = data['data'][1][data['label'][0]==-1]
+
+#import time
+#timestamp = time.time()
+#print(timestamp)
+
+aucs = []
+for outlierpercent in [.01,.05,.10,.25]:
+   print(" -------"+str(outlierpercent)+"------- ")
+   numberofoutliers = np.floor(outlierpercent*len(inliersx))
+   aucas = []
+   aucbs = []
+   auccs = []
+   for trial in range(100):
+      #1. Choose a random set of outliers from the negative class of the respective size (depending on the outlier rate).
+      trialoutlierindicies = np.random.random_integers(0,len(outliersx)-1, (1, numberofoutliers))
+      trialoutliersx = outliersx[trialoutlierindicies]
+      trialoutliersy = outliersy[trialoutlierindicies]
+      
+      #2. Add the outliers to the positive class
+      trialx = np.append(inliersx, trialoutliersx)
+      trialy = np.append(inliersy, trialoutliersy)
+      triallabels = np.append(data['label'][0][data['label'][0]==1], data['label'][0][trialoutlierindicies])
+      trialxy = np.append([trialx], [trialy], axis=0)
+      #print(triallabels.shape)
+      #print(trialxy.shape)
+      
+      #gammatime = time.time()
+      # compute (a) the γ-index with k = 3
+      resulta = gammaidx(trialxy.T, 3)
+      #(b) the γ-index with k = 10
+      resultb = gammaidx(trialxy.T, 10)
+      # and (c) the distance to the mean for each data point.
+      #auctime = time.time()
+      #3. Compute the AUC (area under the ROC) for each method.
+      auca = auc(triallabels, resulta)
+      aucb = auc(triallabels, resultb)
+      #endtime = time.time()
+      aucas.append(auca)
+      aucbs.append(aucb)
+      #aucs.append(aucc)
+      #print(str(auctime - gammatime)+" - "+str(endtime - auctime))
+      if trial%10 == 0:
+         print(str(outlierpercent) + " - "+str(int(trial/10)))
+   aucs.append(aucas)
+   aucs.append(aucbs)
+   plt.boxplot([aucas,aucbs])
+   plt.savefig("6."+str(outlierpercent)+".png")
+   plt.close()
+
+plt.boxplot(aucs)
+plt.savefig("6.png")
+plt.close()
+
 #Assignment 7
 #Assignment 8
