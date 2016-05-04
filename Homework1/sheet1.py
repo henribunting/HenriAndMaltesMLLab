@@ -81,12 +81,11 @@ def dist_matrix(A):
        D[i] = np.sqrt(np.square(A-A[i]).sum(1))
    return D
 
-def k_nearest(X, k_nn):
+def k_nearest(X, k):
    D = dist_matrix(X)
-   nearest_neighbors = np.empty((X.shape[0], k_nn), dtype=int)
-   for i in range(X.shape[0]):
-      nearest_neighbors[i]=np.argsort(D[i])[1:k_nn+1]
+   nearest_neighbors = np.argsort(D, axis=0)[:,1:k+1]
    return nearest_neighbors
+
 
 def gammaidx(X, k):
    distances = dist_matrix(X)
@@ -162,40 +161,61 @@ def auc(y_true, y_val, plot=False):
    
    return aucvalue
 
-#print( auc(np.array([-1, -1, -1, +1, +1]), np.array([0.3, 0.4, 0.5, 0.6, 0.7]), False) )
-#print( auc(np.array([-1, -1, -1, +1, +1, +1]), np.array([0.3, 0.4, 0.6, 0.5, 0.7, 0.8]), plot=True) )
+def auccumsum(y_true, y_val, plot=False):
+   aucvalue = 0;
+   zipped = zip(y_val, y_true)
+   yv, yt = zip(*sorted(zipped, key=lambda x: x[0], reverse=True))
+   yv = np.array(yv)
+   yt = np.array(yt)
+   
+   ts = np.cumsum(yt==1) / np.sum(yt==1)
+   fs = np.cumsum(yt==-1) / np.sum(yt==-1)
+   
+   aucvalue = (np.dot(ts[1:]-ts[:-1], fs[1:]))
+   
+   return 1.0 - aucvalue
+#print( auccumsum(np.array([-1, -1, -1, +1, +1]), np.array([0.3, 0.4, 0.5, 0.6, 0.7]), False) )
+#print( auccumsum(np.array([-1, -1, -1, +1, +1, +1]), np.array([0.3, 0.4, 0.6, 0.5, 0.7, 0.8]), plot=True) )
 
 #Assignment 4
+
+def epsilon_ball(X, epsilon, tol):
+   D = dist_matrix(X)
+   nearest_neighbors = []
+   for i in range(len(X)):
+       nearest_neighbors.append(np.nonzero(D[i]<=epsilon))
+   return nearest_neighbors
 
 def local_C(P, Neighbors):
    D = P-Neighbors
    C = np.tensordot(D,D.T,[1,0])
    return C
 
-def w_matrix(X, k_nn):
-   knn_index = k_nearest(X, k_nn)
-   #print(knn_index.shape)
-   W = np.zeros((X.shape[0],X.shape[0]))
-   #print(k_nn)
-   #print(X.shape)
-   #print(W.shape)
-   for i,P in enumerate(X):
-      C = local_C(P, X[knn_index[i]])
-      unconstrained_W = 1./np.sum(C, axis=0)
-      constrained_W = unconstrained_W/np.sum(unconstrained_W)
-      for kk,j in enumerate(knn_index[i]):
-         #print("i:"+str(i)+" j:"+str(j)+" kk:"+str(kk))
-         W[i][j] = constrained_W[kk]
-   return W
-   
+def w_matrix(X, tol, n_rule, k, epsilon):
 
-def lle(X, m, tol, n_rule='knn', k=5, epsilon=1.):
-   W = w_matrix(X, k)
-   #print(W.shape)
+   if n_rule == 'eps-ball':
+       knn_index = epsilon_ball(X, epsilon, tol)
+   else:
+       knn_index = k_nearest(X, k)
+
+   W = np.zeros((X.shape[0],X.shape[0]))
+   for i,P in enumerate(X):
+       C = local_C(P, X[knn_index[i]])
+       C += np.eye(k)*tol
+       unconstrained_W = 1./np.sum(C, axis=0)
+       constrained_W = unconstrained_W/np.sum(unconstrained_W)
+       for kk,j in enumerate(knn_index[i]):
+           W[i][j] = constrained_W[kk]
+
+   return W
+
+def lle(X, m, tol, n_rule='knn', k=5, epsilon=1.0):
+   W = w_matrix(X, tol, n_rule, k, epsilon)
    A = np.eye(*W.shape) - W
    M = (A.T).dot(A)
    Y = np.linalg.eigh(M)[1][1:m+1].T
    return Y
+
 
 
 
@@ -287,22 +307,9 @@ plt.close()
 '''
 
 #Assignment 6
+'''
 data = np.load("banana.npz")
-'''
-print(data['data'].shape)
-print(data['label'].shape)
-print((data['label'][0,10:20]))
 
-labels2d = np.zeros((2, len(data['label'][0])))
-for i in range(len(data['label'][0])):
-   labels2d[0][i] = data['label'][0][i]
-   labels2d[1][i] = data['label'][0][i]
-
-print(labels2d[:,10:20])
-print(data['data'][labels2d==1].shape)
-#bananainliers = data[data['label']==1]
-#bananaoutliers = np.load("banana.npz")['label']
-'''
 inliersx = data['data'][0][data['label'][0]==1]
 inliersy = data['data'][1][data['label'][0]==1]
 outliersx = data['data'][0][data['label'][0]==-1]
@@ -316,10 +323,16 @@ aucs = []
 for outlierpercent in [.01,.05,.10,.25]:
    print(" -------"+str(outlierpercent)+"------- ")
    numberofoutliers = np.floor(outlierpercent*len(inliersx))
+   
+   #fullx = np.append(inliersx, outliersx)
+   #fully = np.append(inliersy, outliersy)
+   #fulllabels = np.append(data['label'][0][data['label'][0]==1], data['label'][0])
+   #fullxy = np.append([fullx], [fully], axis=0)
+   
    aucas = []
    aucbs = []
    auccs = []
-   for trial in range(100):
+   for trial in range(10):
       #1. Choose a random set of outliers from the negative class of the respective size (depending on the outlier rate).
       trialoutlierindicies = np.random.random_integers(0,len(outliersx)-1, (1, numberofoutliers))
       trialoutliersx = outliersx[trialoutlierindicies]
@@ -339,26 +352,73 @@ for outlierpercent in [.01,.05,.10,.25]:
       #(b) the γ-index with k = 10
       resultb = gammaidx(trialxy.T, 10)
       # and (c) the distance to the mean for each data point.
+      resultc = np.sqrt(np.square(trialxy - np.mean(trialxy, axis=1).reshape((2,1))).sum(0))      
+      
       #auctime = time.time()
       #3. Compute the AUC (area under the ROC) for each method.
-      auca = auc(triallabels, resulta)
-      aucb = auc(triallabels, resultb)
+      auca = 1.0 - auccumsum(triallabels, resulta)
+      aucb = 1.0 - auccumsum(triallabels, resultb)
+      aucc = 1.0 - auccumsum(triallabels, resultc)
       #endtime = time.time()
       aucas.append(auca)
       aucbs.append(aucb)
-      #aucs.append(aucc)
+      auccs.append(aucc)
       #print(str(auctime - gammatime)+" - "+str(endtime - auctime))
       if trial%10 == 0:
          print(str(outlierpercent) + " - "+str(int(trial/10)))
    aucs.append(aucas)
    aucs.append(aucbs)
-   plt.boxplot([aucas,aucbs])
+   aucs.append(auccs)
+   plt.boxplot([aucas,aucbs,auccs])
+   plt.xticks([1, 2, 3], [str(int(outlierpercent*100))+'% gamma, k=3', str(int(outlierpercent*100))+'% gamma, k=10', str(int(outlierpercent*100))+'% mean dist'])
    plt.savefig("6."+str(outlierpercent)+".png")
    plt.close()
 
+#ax.set_xticklabels()
 plt.boxplot(aucs)
+plt.xticks([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 
+            ['1% - gamma, k=3', '1% - gamma, k=10', '1% - mean dist',
+             '5% - gamma, k=3', '5% - gamma, k=10', '5% - mean dist',
+             '10% - gamma, k=3', '10% - gamma, k=10', '10% - mean dist',
+             '25% - gamma, k=3', '25% - gamma, k=10', '25% - mean dist'], 
+             rotation=37, horizontalalignment='right')
+plt.margins(0.2)                 # Pad margins so that markers don't get clipped by the axes
+plt.subplots_adjust(bottom=0.30) # Tweak spacing to prevent clipping of tick-labels
 plt.savefig("6.png")
 plt.close()
+'''
 
 #Assignment 7
 #Assignment 8
+import pandas
+#1. Load the data set.
+loadeddata = np.load("flatroll_data.npz")
+#print(loadeddata['true_embedding'].shape)
+print(loadeddata['Xflat'].T.shape)
+
+#2. Add Gaussian noise with variance 0.2 and 1.8 to the data set (this results in 2 noisy data sets).
+data0 = loadeddata['Xflat'].T
+data02 = loadeddata['Xflat'].T + np.random.normal(0, .2, (loadeddata['Xflat'].T.shape))
+data18 = loadeddata['Xflat'].T + np.random.normal(0, 1.8, (loadeddata['Xflat'].T.shape))
+
+#3. Apply LLE on both data sets, where the neighborhood graph should be constructed using k-nn.
+#For both noise levels, try to find 
+#(a) a good value for k which unrolls the flat roll and  
+data02lle = lle(data0, 2, .001, n_rule='knn', k=10, epsilon=1.)
+#print(data02lle.shape)
+dataframe = pandas.DataFrame(data02lle, columns=['x', 'y', 'z'])
+from mpl_toolkits.mplot3d import Axes3D
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(data02lle.T[0], data02lle.T[1], data02lle.T[2])
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+
+plt.show()
+
+#(b) a value which is obviously too large.
+
+#4. For each of the four combinations of low/high noise level good/too large k, plot the neighborhood graph and the resulting embedding.
+
