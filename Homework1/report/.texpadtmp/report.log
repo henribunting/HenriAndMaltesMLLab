@@ -1,0 +1,338 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.20)  5 MAY 2016 21:15
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**report.tex
+(./report.tex
+LaTeX2e <2015/01/01>
+Babel <3.9l> and hyphenation patterns for 21 languages loaded.
+(/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 94.
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count87
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen105
+\lightrulewidth=\dimen106
+\cmidrulewidth=\dimen107
+\belowrulesep=\dimen108
+\belowbottomsep=\dimen109
+\aboverulesep=\dimen110
+\abovetopsep=\dimen111
+\cmidrulesep=\dimen112
+\cmidrulekern=\dimen113
+\defaultaddspace=\dimen114
+\@cmidla=\count88
+\@cmidlb=\count89
+\@aboverulesep=\dimen115
+\@belowrulesep=\dimen116
+\@thisruleclass=\count90
+\@lastruleclass=\count91
+\@thisrulewidth=\dimen117
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/parskip/parskip.sty
+Package: parskip 2001/04/09 non-zero parskip adjustments
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count92
+\float@exts=\toks15
+\float@box=\box26
+\@float@everytoks=\toks16
+\@floatcapt=\box27
+) (/Users/henri/Learning/TUBerlin/Classes/MLLabClass/Homeworks/Homework1/report/.texpadtmp/report.aux
+
+LaTeX Warning: Label `fig:awesome_image1' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image2' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image3' multiply defined.
+
+
+LaTeX Warning: Label `fig:6' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image1' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image2' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image3' multiply defined.
+
+
+LaTeX Warning: Label `fig:6' multiply defined.
+
+
+LaTeX Warning: Label `fig:6' multiply defined.
+
+
+LaTeX Warning: Label `fig:6' multiply defined.
+
+
+LaTeX Warning: Label `fig:7_1' multiply defined.
+
+)
+\openout1 = `report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count93
+\scratchdimen=\dimen118
+\scratchbox=\box28
+\nofMPsegments=\count94
+\nofMParguments=\count95
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count96
+\MPscratchDim=\dimen119
+\MPnumerator=\count97
+\makeMPintoPDFobject=\count98
+\everyMPtoPDFconversion=\toks18
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO)
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+)) (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+ (/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 13.
+ [1
+
+{/Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] <5_b_a_00.png, id=13, 578.16pt x 433.62pt>
+File: 5_b_a_00.png Graphic file (type png)
+ <use 5_b_a_00.png>
+Package pdftex.def Info: 5_b_a_00.png used on input line 40.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 42.
+ <5_b_b_00.png, id=15, 578.16pt x 433.62pt>
+File: 5_b_b_00.png Graphic file (type png)
+ <use 5_b_b_00.png>
+Package pdftex.def Info: 5_b_b_00.png used on input line 44.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+ <5_b_c_00.png, id=16, 578.16pt x 433.62pt>
+File: 5_b_c_00.png Graphic file (type png)
+ <use 5_b_c_00.png>
+Package pdftex.def Info: 5_b_c_00.png used on input line 48.
+(pdftex.def)             Requested size: 71.9989pt x 53.99725pt.
+ <5_c_Xprime_00_45_allinone.png, id=17, 578.16pt x 433.62pt>
+File: 5_c_Xprime_00_45_allinone.png Graphic file (type png)
+ <use 5_c_Xprime_00_45_allinone.png>
+Package pdftex.def Info: 5_c_Xprime_00_45_allinone.png used on input line 54.
+(pdftex.def)             Requested size: 360.0pt x 269.99951pt.
+ <5_b_a_05.png, id=18, 578.16pt x 433.62pt>
+File: 5_b_a_05.png Graphic file (type png)
+ <use 5_b_a_05.png>
+Package pdftex.def Info: 5_b_a_05.png used on input line 63.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+ <5_b_b_05.png, id=19, 578.16pt x 433.62pt>
+File: 5_b_b_05.png Graphic file (type png)
+ <use 5_b_b_05.png>
+Package pdftex.def Info: 5_b_b_05.png used on input line 67.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+ <5_b_c_05.png, id=20, 578.16pt x 433.62pt>
+File: 5_b_c_05.png Graphic file (type png)
+ <use 5_b_c_05.png>
+Package pdftex.def Info: 5_b_c_05.png used on input line 71.
+(pdftex.def)             Requested size: 71.9989pt x 53.99725pt.
+ [3
+
+ <./5_b_a_00.png> <./5_b_b_00.png> <./5_b_c_00.png> <./5_c_Xprime_00_45_allinone.png>] <5_c_Xprime_05_45_allinone.png, id=28, 578.16pt x 433.62pt>
+File: 5_c_Xprime_05_45_allinone.png Graphic file (type png)
+ <use 5_c_Xprime_05_45_allinone.png>
+Package pdftex.def Info: 5_c_Xprime_05_45_allinone.png used on input line 77.
+(pdftex.def)             Requested size: 360.0pt x 269.99951pt.
+ <5_b_a_30.png, id=29, 578.16pt x 433.62pt>
+File: 5_b_a_30.png Graphic file (type png)
+ <use 5_b_a_30.png>
+Package pdftex.def Info: 5_b_a_30.png used on input line 86.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+ <5_b_b_30.png, id=30, 578.16pt x 433.62pt>
+File: 5_b_b_30.png Graphic file (type png)
+ <use 5_b_b_30.png>
+Package pdftex.def Info: 5_b_b_30.png used on input line 90.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+ <5_b_c_30.png, id=31, 578.16pt x 433.62pt>
+File: 5_b_c_30.png Graphic file (type png)
+
+<use 5_b_c_30.png>
+Package pdftex.def Info: 5_b_c_30.png used on input line 94.
+(pdftex.def)             Requested size: 71.9989pt x 53.99725pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--95
+[]\OT1/cmr/m/n/10.95 Figure 11:
+ []
+
+[4 <./5_b_a_05.png> <./5_b_b_05.png> <./5_b_c_05.png> <./5_c_Xprime_05_45_allinone.png>] <5_c_Xprime_30_45_allinone.png, id=39, 578.16pt x 433.62pt>
+File: 5_c_Xprime_30_45_allinone.png Graphic file (type png)
+ <use 5_c_Xprime_30_45_allinone.png>
+Package pdftex.def Info: 5_c_Xprime_30_45_allinone.png used on input line 100.
+(pdftex.def)             Requested size: 360.0pt x 269.99951pt.
+ <5_b_a_23479.png, id=40, 578.16pt x 433.62pt>
+File: 5_b_a_23479.png Graphic file (type png)
+ <use 5_b_a_23479.png>
+Package pdftex.def Info: 5_b_a_23479.png used on input line 108.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+ <5_b_b_23479.png, id=41, 578.16pt x 433.62pt>
+File: 5_b_b_23479.png Graphic file (type png)
+ <use 5_b_b_23479.png>
+Package pdftex.def Info: 5_b_b_23479.png used on input line 112.
+(pdftex.def)             Requested size: 140.39978pt x 105.29497pt.
+ <5_b_c_23479.png, id=42, 578.16pt x 433.62pt>
+File: 5_b_c_23479.png Graphic file (type png)
+ <use 5_b_c_23479.png>
+Package pdftex.def Info: 5_b_c_23479.png used on input line 116.
+(pdftex.def)             Requested size: 71.9989pt x 53.99725pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
+[]\OT1/cmr/m/n/10.95 Figure 15:
+ []
+
+[5 <./5_b_a_30.png> <./5_b_b_30.png> <./5_b_c_30.png> <./5_c_Xprime_30_45_allinone.png>] <5_c_Xprime_23479_45_allinone.png, id=50, 578.16pt x 433.62pt>
+File: 5_c_Xprime_23479_45_allinone.png Graphic file (type png)
+ <use 5_c_Xprime_23479_45_allinone.png>
+Package pdftex.def Info: 5_c_Xprime_23479_45_allinone.png used on input line 122.
+(pdftex.def)             Requested size: 360.0pt x 269.99951pt.
+ [6 <./5_b_a_23479.png> <./5_b_b_23479.png> <./5_b_c_23479.png> <./5_c_Xprime_23479_45_allinone.png>] <6.png, id=58, 578.16pt x 433.62pt>
+File: 6.png Graphic file (type png)
+ <use 6.png>
+Package pdftex.def Info: 6.png used on input line 130.
+(pdftex.def)             Requested size: 360.0pt x 269.99951pt.
+ <7_a_0.png, id=59, 358.33875pt x 245.91875pt>
+File: 7_a_0.png Graphic file (type png)
+ <use 7_a_0.png>
+Package pdftex.def Info: 7_a_0.png used on input line 137.
+(pdftex.def)             Requested size: 360.0pt x 247.07387pt.
+ <7_a_1.png, id=60, 433.62pt x 289.08pt>
+File: 7_a_1.png Graphic file (type png)
+ <use 7_a_1.png>
+Package pdftex.def Info: 7_a_1.png used on input line 141.
+(pdftex.def)             Requested size: 360.0pt x 240.01132pt.
+ [7
+
+ <./6.png>] <7_a_2.png, id=66, 358.33875pt x 245.91875pt>
+File: 7_a_2.png Graphic file (type png)
+ <use 7_a_2.png>
+Package pdftex.def Info: 7_a_2.png used on input line 145.
+(pdftex.def)             Requested size: 360.0pt x 247.07387pt.
+ [8 <./7_a_0.png>] <7_a_3.png, id=71, 433.62pt x 289.08pt>
+File: 7_a_3.png Graphic file (type png)
+ <use 7_a_3.png>
+Package pdftex.def Info: 7_a_3.png used on input line 149.
+(pdftex.def)             Requested size: 360.0pt x 240.01132pt.
+ <7_a_4.png, id=72, 433.62pt x 289.08pt>
+File: 7_a_4.png Graphic file (type png)
+ <use 7_a_4.png>
+Package pdftex.def Info: 7_a_4.png used on input line 153.
+(pdftex.def)             Requested size: 360.0pt x 240.01132pt.
+ [9 <./7_a_1.png> <./7_a_2.png>] <7_a_5.png, id=78, 433.62pt x 289.08pt>
+File: 7_a_5.png Graphic file (type png)
+ <use 7_a_5.png>
+Package pdftex.def Info: 7_a_5.png used on input line 157.
+(pdftex.def)             Requested size: 360.0pt x 240.01132pt.
+ [10 <./7_a_3.png> <./7_a_4.png>] [11 <./7_a_5.png>] (/Users/henri/Learning/TUBerlin/Classes/MLLabClass/Homeworks/Homework1/report/.texpadtmp/report.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 1773 strings out of 494501
+ 29137 string characters out of 6161869
+ 78253 words of memory out of 5000000
+ 5024 multiletter control sequences out of 15000+600000
+ 8503 words of font info for 30 fonts, out of 8000000 for 9000
+ 319 hyphenation exceptions out of 8191
+ 38i,7n,23p,411b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
+</Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/henri/RootLocalInstalls/TeX/usr/local/texlive/2015basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on /Users/henri/Learning/TUBerlin/Classes/MLLabClass/Homeworks/Homework1/report/.texpadtmp/report.pdf (11 pages, 2016086 bytes).
+PDF statistics:
+ 103 PDF objects out of 1000 (max. 8388607)
+ 39 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 116 words of extra memory for PDF output out of 10000 (max. 10000000)
+
